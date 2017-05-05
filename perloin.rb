@@ -53,9 +53,33 @@ def single_color_data
   data
 end
 
-$contrast = Perlin::Curve.contrast(Perlin::Curve::CUBIC, 7)
-$z_layers = 100
-pixel_data = single_color_data()
+def colored_heightmap
+  n2d = Perlin::Noise.new 3
+
+  puts "started generating"
+
+  data = (0..$z_layers).map do |z|
+    (0..11).map do |x|
+      (0..11).map do |y|
+        noise_value = $contrast.call(n2d[x / 12.0, y/12.0, z/12.0])
+
+        # brightness = noise_value_to_brightness(noise_value)
+        # red = noise_value_to_brightness(noise_value)
+        red   = noise_value_to_brightness((Math.sin(noise_value * Math::PI * 2) + 1) / 2)
+        green = noise_value_to_brightness((Math.sin(noise_value * Math::PI * 3) + 1) / 2)
+        blue  = noise_value_to_brightness((Math.sin(noise_value * Math::PI * 4) + 1) / 2)
+
+        [red, green, blue]
+      end
+    end
+  end
+  puts "finished generating"
+  data
+end
+
+$contrast = Perlin::Curve.contrast(Perlin::Curve::CUBIC, 2)
+$z_layers = 20
+pixel_data = colored_heightmap()
 
 while(true) do
   (0..$z_layers).each do |z|
