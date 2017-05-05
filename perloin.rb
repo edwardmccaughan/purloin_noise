@@ -1,4 +1,4 @@
-require 'serialport' # NOTE: you probably need to install this gem with: 'gem install serialport'
+require 'serialport'
 require 'perlin_noise'
 
 require_relative 'arduino-lights'
@@ -42,8 +42,8 @@ def single_color_data
         noise_value = $contrast.call(n2d[x / 12.0, y/12.0, z/12.0])
 
         red = noise_value_to_brightness(noise_value)
-        green = 0 #noise_value_to_brightness(value)
-        blue = 0 #noise_value_to_brightness(value)
+        green = 0
+        blue = 0
 
         [red, green, blue]
       end
@@ -62,10 +62,7 @@ def colored_heightmap
     (0..11).map do |x|
       (0..11).map do |y|
         noise_value = $contrast.call(n2d[x / 12.0, y/12.0, z/12.0])
-        # noise_value = $contrast.call(n2d[x / 12.0, y/12.0, z/12.0])
 
-        # brightness = noise_value_to_brightness(noise_value)
-        # red = noise_value_to_brightness(noise_value)
         red   = noise_value_to_brightness((Math.sin(noise_value * Math::PI * 2) + 1) / 2)
         green = noise_value_to_brightness((Math.sin(noise_value * Math::PI * 3) + 1) / 2)
         blue  = noise_value_to_brightness((Math.sin(noise_value * Math::PI * 4) + 1) / 2)
@@ -90,48 +87,9 @@ while(true) do
 
         red, green, blue = pixel_data[z][x][y]
 
-
-        #puts "x #{x}, y: #{y}, pixel_number: #{pixel_number}"
-        #puts "value #{value}, brightness: #{brightness}"
         ArduinoLights::set_pixel(pixel_number, red, green, blue)
       end
     end
     ArduinoLights::draw_screen
   end
 end
-
-
-# (0..11).each do |z|
-#   (0..11).each do |x|
-#     #puts "next line"
-#     (0..11).each do |y|
-#       t = Time.now
-#       value = contrast.call(n2d_red[x / 12.0, y/12.0, z/12.0])
-#       red = noise_value_to_brightness(value)
-
-#       value = contrast.call(n2d_green[x / 12.0, y/12.0, z/12.0])
-#       green = noise_value_to_brightness(value)
-
-#       value = contrast.call(n2d_blue[x / 12.0, y/12.0, z/12.0])
-#       blue = noise_value_to_brightness(value)
-
-#       pixel_number = xy_to_pixel_number(x,y)
-
-#       puts "calulation took: #{t - Time.now}"
-
-
-
-
-
-
-
-#       #puts "x #{x}, y: #{y}, pixel_number: #{pixel_number}"
-#       #puts "value #{value}, brightness: #{brightness}"
-#       ArduinoLights::set_pixel(pixel_number, red, green, blue)
-#     end
-#   end
-  
-#   ArduinoLights::draw_screen
-# end
-
-
