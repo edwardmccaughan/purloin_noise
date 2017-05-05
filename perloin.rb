@@ -62,6 +62,7 @@ def colored_heightmap
     (0..11).map do |x|
       (0..11).map do |y|
         noise_value = $contrast.call(n2d[x / 12.0, y/12.0, z/12.0])
+        # noise_value = $contrast.call(n2d[x / 12.0, y/12.0, z/12.0])
 
         # brightness = noise_value_to_brightness(noise_value)
         # red = noise_value_to_brightness(noise_value)
@@ -77,8 +78,8 @@ def colored_heightmap
   data
 end
 
-$contrast = Perlin::Curve.contrast(Perlin::Curve::CUBIC, 2)
-$z_layers = 20
+$contrast = Perlin::Curve.contrast(Perlin::Curve::CUBIC, 3)
+$z_layers = 100
 pixel_data = colored_heightmap()
 
 while(true) do
