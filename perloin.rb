@@ -1,9 +1,8 @@
 require 'serialport'
 require 'perlin_noise'
+require 'arduino-lights'
 
-require_relative 'arduino-lights'
 require_relative 'utils'
-
 
 def mixed_colors_pixel_arrays
   n2d_red = Perlin::Noise.new 3
@@ -90,6 +89,6 @@ while(true) do
         ArduinoLights::set_pixel(pixel_number, red, green, blue)
       end
     end
-    ArduinoLights::draw_screen
+    ArduinoLights::end_frame
   end
 end
