@@ -1,0 +1,14 @@
+Source: purloin-noise
+Section: games
+Priority: optional
+Maintainer: Arthur Taylor
+Vcs-Git: https://github.com/edmccaughan/purloin_noise
+Vcs-Browser: https://github.com/edmccaughan/purloin_noise
+
+Package: purloin-noise
+Architecture: all
+Multi-Arch: foreign
+Depends:
+Priority: optional
+Description: Purloin Noise - simple visualisation to render Perlin noise to an LED display
+
