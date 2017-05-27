@@ -22,6 +22,20 @@ This application requires either the LED matrix to be connected to your computer
 bundle exec ruby perloin.rb
 ```
 
+## Building
+
+Configuration files are supplied for Debian packaging. Use `debuild` to rebuild the package:
+
+```
+debuild --no-tgz-check
+```
+
+which will create appropriate architecture-independent Debian packages in the parent directory. When updating the package, us `dch` to update the changelog:
+
+```
+dch -v 0.0.3
+```
+
 ## Maintainer
 
 This visualisation is maintained by [@edwardmccaughan](https://github.com/edwardmccaughan).

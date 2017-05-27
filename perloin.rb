@@ -1,8 +1,12 @@
+#!/usr/bin/ruby
 require 'serialport'
 require 'perlin_noise'
 require 'arduino-lights'
 
-require_relative 'utils'
+def noise_value_to_brightness(noise_value)
+  range = 128 # 253
+  (noise_value * range).to_i
+end
 
 def mixed_colors_pixel_arrays
   n2d_red = Perlin::Noise.new 3
@@ -75,18 +79,16 @@ def colored_heightmap
 end
 
 $contrast = Perlin::Curve.contrast(Perlin::Curve::CUBIC, 3)
-$z_layers = 100
+$z_layers = 50
 pixel_data = colored_heightmap()
 
 while(true) do
   (0..$z_layers).each do |z|
     (0..11).each do |x|
       (0..11).each do |y|
-        pixel_number = xy_to_pixel_number(x,y)
-
         red, green, blue = pixel_data[z][x][y]
 
-        ArduinoLights::set_pixel(pixel_number, red, green, blue)
+        ArduinoLights::set_pixel_xy(x, y, red, green, blue)
       end
     end
     ArduinoLights::end_frame
